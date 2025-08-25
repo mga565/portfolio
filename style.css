@@ -360,6 +360,18 @@ body.jp-active .myimg {
 
 
 @media (max-width: 600px) {
+    html, body {
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background: #1f242d; /* or your gradient/image */
+}
 
   /* Home layout vertical */
   .home {
