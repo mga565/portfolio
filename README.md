@@ -1,2 +1,3 @@
 # portfolio
-https://github.com/mga565/portfolio/
+
+https://mga565.github.io/portfolio/
