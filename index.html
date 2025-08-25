@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Max Goch</title>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link href="./style.css" rel="stylesheet">
+  <style>
+    /* Responsive navbar */
+    .menu-toggle {
+      display: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: white;
+    }
+
+
+
+    @media (max-width: 600px) {
+      .navbar ul {
+        display: none;
+        flex-direction: column;
+        background: rgba(0,0,0,0.8);
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        width: 180px;
+        border-radius: 10px;
+        padding: 10px;
+      }
+      .navbar ul.show {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+      }
+      .lang-switch {
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar glowing-border">
+    <a href="#" class="logo"></a>
+
+    <!-- Hamburger Button -->
+    <div class="menu-toggle" id="menu-toggle">
+      <i class='bx bx-menu'></i>
+    </div>
+
+    <ul id="nav-links">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="./about.html">About</a></li>
+      <li><a href="./projects.html">Projects</a></li>
+      <li><a href="#">Service</a></li>
+      <li><a href="./contact.html" target="_blank">Contact</a></li>
+    </ul>
+
+    <div class="lang-switch" id="lang-switch">
+      <span id="en-btn" class="active">EN</span> | 
+      <span id="jp-btn">JP</span>
+    </div>
+  </nav>
+
+  <div class="bars-animation">
+    <div class="bar" style="--i:6;"></div>
+    <div class="bar" style="--i:5;"></div>
+    <div class="bar" style="--i:4;"></div>
+    <div class="bar" style="--i:3;"></div>
+    <div class="bar" style="--i:2;"></div>
+    <div class="bar" style="--i:1;"></div>
+  </div>
+
+  <section class="home">
+    <div class="home-info">
+      <h1 data-en="Maksat Gochyyev" data-jp="マクサット・ゴチエフ">Maksat Gochyyev</h1>
+<h2>
+  I'm a 
+  <span data-text-en="Frontend Developer" data-text-jp="フロントエンド開発者">Frontend Developer</span>
+</h2>
+
+      <p data-en="Hi there. Thank you for visiting my webpage. I am a software developer, self-taught. I would love to contribute. I am eager to learn to adapt and improve. Please don't hesitate and reach me out."
+         data-jp="こんにちは。私のウェブページに訪問いただきありがとうございます。私は独学のソフトウェア開発者です。貢献したいです。学び、適応し、成長したいと思っています。ぜひご連絡ください。">
+        Hi there. Thank you for visiting my webpage. I am a software developer. I would love to contribute. I am eager to learn to adapt and improve. Please don't hesitate and reach me out.
+      </p>
+      <div class="btn-sci">
+        <a href="#" class="btn" data-en="Download CV" data-jp="履歴書ダウンロード">Download CV</a>
+        <div class="sci">
+          <a href="https://www.github.com/mga565" target="_blank"><i class='bx bxl-github'></i></a>
+          <a href="https://www.linkedin.com/in/maxgoch565" target="_blank"><i class='bx bxl-linkedin-square'></i></a>
+          <a href="https://www.instagram.com/temujinumai/" target="_blank"><i class='bx bxl-instagram-alt'></i></a>
+          <a href="./contact.html" target="_blank"><i class='bx bxl-gmail'></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-img">
+      <div class="img-box">
+        <div class="img-item">
+          <img class="myimg" src="./images/myimg.png" alt="my-image">
+        </div>
+      </div>
+    </div>
+  </section>
+<script>
+  const langSwitch = document.getElementById('lang-switch');
+  const enBtn = document.getElementById('en-btn');
+  const jpBtn = document.getElementById('jp-btn');
+
+  // Hamburger toggle
+  const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.getElementById('nav-links');
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+  });
+
+// 🌸 Sakura animation function
+function playSakura() {
+  const duration = 10000; // run for 10 sec
+  const interval = 300;   // new petal every 0.3 sec
+
+  const sakuraInterval = setInterval(() => {
+    const petal = document.createElement("div");
+    petal.classList.add("sakura");
+
+    // random horizontal start position
+    petal.style.left = Math.random() * window.innerWidth + "px";
+
+    // random size 20–50px
+    const size = 20 + Math.random() * 30;
+    petal.style.width = size + "px";
+    petal.style.height = size + "px";
+
+    // random animation speed (3–7 sec)
+    petal.style.animationDuration = (6 + Math.random() * 5) + "s";
+
+
+    // random drift direction (left or right)
+    petal.style.animationName = Math.random() > 0.5 ? "fall-left" : "fall-right";
+
+    document.body.appendChild(petal);
+
+    // clean up after animation
+    setTimeout(() => petal.remove(), 8000);
+  }, interval);
+
+  // stop spawning after duration
+  setTimeout(() => clearInterval(sakuraInterval), duration);
+}
+
+// 🌸 Function to switch text language + image
+function switchLanguage(lang) {
+  document.querySelectorAll("[data-en]").forEach(el => {
+    el.textContent = lang === "jp" ? el.dataset.jp : el.dataset.en;
+  });
+
+  // Update ::before text spans (CSS handles accent color)
+  document.querySelectorAll(".home-info h2 span").forEach(span => {
+    span.setAttribute(
+      "data-text-current",
+      lang === "jp" ? span.dataset.textJp : span.dataset.textEn
+    );
+  });
+
+  // Change image
+  const img = document.querySelector(".myimg");
+  if (img) {
+    img.src = lang === "jp" ? "./images/kimonoboy.png" : "./images/myimg.png";
+  }
+
+  // Toggle pink theme
+  document.body.classList.toggle("jp-active", lang === "jp");
+
+  // 🌸 Play sakura only when JP is active
+  if (lang === "jp") {
+    playSakura();
+  }
+}
+
+
+  // Apply saved language from localStorage
+  function applySavedLanguage() {
+    const lang = localStorage.getItem('site-lang') || 'en';
+
+    if (lang === 'jp') {
+      jpBtn.classList.add('active');
+      enBtn.classList.remove('active');
+      langSwitch.classList.add('jp-active');
+    } else {
+      enBtn.classList.add('active');
+      jpBtn.classList.remove('active');
+      langSwitch.classList.remove('jp-active');
+    }
+
+    switchLanguage(lang);
+  }
+
+  // EN button click
+  enBtn.addEventListener('click', () => {
+    localStorage.setItem('site-lang', 'en');
+    applySavedLanguage();
+  });
+
+  // JP button click
+  jpBtn.addEventListener('click', () => {
+    localStorage.setItem('site-lang', 'jp');
+    applySavedLanguage();
+  });
+
+  // Run on page load
+  applySavedLanguage();
+</script>
+
+
+
+</body>
+</html>

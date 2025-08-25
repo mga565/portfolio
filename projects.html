@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects - Max Goch</title>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+<link href="./style.css" rel="stylesheet" id="theme-link">
+
+<style>
+:root {
+    --bg: #1f242d;
+    --accent: greenyellow;
+    --tile-base: #1b222b;
+    --tile-mid: #22313a;
+    --tile-border: #2a3942;
+    --gap: 10px;
+    --tile-anim: 2.8s;
+    --delay-step: 90ms;
+    --tile-radius: 10px;
+    --tile-size: 80px;
+}
+
+@keyframes borderGlow {
+  0%, 100% { border-color: var(--nav-glow); }
+  50%      { border-color: var(--nav-glow); }
+}
+.glowing-border {
+  border-bottom: 2px solid var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  transition: border-color 0.4s, box-shadow 0.4s;
+}
+/* Base */
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    background: var(--bg);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+/* NAV */
+nav {
+  background: var(--bg);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 25px 9%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  visibility: hidden;
+  opacity: 0;
+  animation: show-content 0.5s linear forwards;
+  animation-delay: 0.1s;
+}
+
+.navbar .logo { font-size: 30px; font-weight: 700; }
+.navbar ul { display: flex; margin:0; padding:0; }
+.navbar ul li { list-style: none; margin-left: 35px; }
+.navbar ul li a { color: white; font-size: 20px; font-weight: 500; text-decoration: none; transition: color 0.25s; }
+.navbar ul li:hover a, .navbar ul li.active a { color: var(--accent); }
+
+/* Language Switch */
+.lang-switch span { cursor: pointer; font-weight: 700; transition: color 0.25s, text-shadow 0.25s; }
+.lang-switch .active { color: var(--accent); text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent); }
+
+
+/* Portfolio Section */
+.portfolio {
+    padding: 120px 9% 80px;
+    text-align: center;
+}
+.portfolio h2 {
+    font-size: 36px;
+    margin-bottom: 50px;
+    color: var(--accent);
+}
+.portfolio-grid {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.portfolio-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    border-radius: 15px;
+    box-shadow: 0 0 15px var(--accent);
+    width: 300px;
+    padding: 15px;
+    text-align: left;
+    transition: transform 0.1s;
+    margin: 40px 0;
+}
+.portfolio-item:hover { transform: translateY(-5px); }
+.portfolio-item img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+.portfolio-text { flex-grow:1; }
+.portfolio-text h3 { font-size: 20px; margin-bottom: 10px; color: var(--accent); }
+.portfolio-text p { font-size: 16px; margin-bottom: 15px; }
+.portfolio-text .btn-wrapper { text-align: center; margin-top: 10px; }
+.portfolio-text .btn {
+    display: inline-block;
+    padding: 8px 20px;
+    background: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 10px;
+    color: #1f242d;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.1s;
+}
+.portfolio-text .btn:hover {
+    background: transparent;
+    color: var(--accent);
+    box-shadow: none;
+}
+
+/* Background grid */
+#bg-grid {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--tile-size));
+  grid-template-rows: repeat(var(--rows), var(--tile-size));
+  justify-content: center;
+  align-content: center;
+  gap: 10px;
+  z-index: -1;
+}
+
+/* Diamond animation */
+.diamond {
+  width: 50px;
+  height: 50px;
+  background: var(--tile-base);
+  border: 1px solid var(--tile-border);
+  transform: rotate(45deg);
+  animation: diamondAnim var(--tile-anim) ease-in-out infinite;
+  animation-delay: var(--d,0ms);
+  will-change: transform, box-shadow, background-color;
+}
+
+@keyframes diamondAnim {
+  0%,100% {
+    transform: rotate(45deg) scale(1);
+    background: var(--tile-base);
+    box-shadow: inset 0 0 0 1px rgba(173,255,47,0.06);
+  }
+  50% {
+    transform: rotate(45deg) scale(1.2);
+    background: var(--tile-mid);
+    box-shadow: 0 0 12px rgba(204,238,154,0.35),
+                inset 0 0 0 1px rgba(173,255,47,0.3);
+  }
+}
+</style>
+</head>
+<body>
+<div id="bg-grid"></div>
+
+<nav class="navbar glowing-border">
+    <a href="./index.html" class="logo"></a>
+    <ul>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./about.html">About</a></li>
+        <li class="active"><a href="./projects.html">Projects</a></li>
+        <li><a href="#">Service</a></li>
+        <li><a href="./contact.html" target="_blank">Contact</a></li>
+    </ul>
+    <div class="lang-switch" id="lang-switch">
+        <span id="en-btn" class="active">EN</span> | 
+        <span id="jp-btn">JP</span>
+    </div>
+</nav>
+
+<section class="portfolio">
+    <h2 data-en="My Portfolio" data-jp="ポートフォリオ">My Projects</h2>
+    <div class="portfolio-grid">
+        <div class="portfolio-item">
+            <img src="./images/portfolio/anki.png" alt="Project 1">
+            <div class="portfolio-text">
+                <h3 data-en="Project One" data-jp="プロジェクト1">Project One</h3>
+                <p data-en="Lorem Ipsum is simply dummy text..." data-jp="これはダミーテキストです...">Lorem Ipsum is simply dummy text...</p>
+                <div class="btn-wrapper">
+                    <a href="https://example.com/project1" target="_blank" class="btn" data-en="View Project" data-jp="プロジェクトを見る">View Project</a>
+                </div>
+            </div>
+        </div>
+        <div class="portfolio-item">
+            <img src="./images/portfolio/ankired.png" alt="Project 2">
+            <div class="portfolio-text">
+                <h3 data-en="Project Two" data-jp="プロジェクト2">Project Two</h3>
+                <p data-en="Lorem Ipsum is simply dummy text..." data-jp="これはダミーテキストです...">Lorem Ipsum is simply dummy text...</p>
+                <div class="btn-wrapper">
+                    <a href="https://example.com/project2" target="_blank" class="btn" data-en="View Project" data-jp="プロジェクトを見る">View Project</a>
+                </div>
+            </div>
+        </div>
+        <div class="portfolio-item">
+            <img src="./images/portfolio/ankiwhite.png" alt="Project 3">
+            <div class="portfolio-text">
+                <h3 data-en="Project Three" data-jp="プロジェクト3">Project Three</h3>
+                <p data-en="Lorem Ipsum is simply dummy text..." data-jp="これはダミーテキストです...">Lorem Ipsum is simply dummy text...</p>
+                <div class="btn-wrapper">
+                    <a href="https://example.com/project3" target="_blank" class="btn" data-en="View Project" data-jp="プロジェクトを見る">View Project</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+// Background animation (diamonds only)
+(function() {
+  const grid = document.getElementById('bg-grid');
+  const TILE = 70;
+  const build = () => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const cols = Math.ceil(w / (TILE + 10));
+    const rows = Math.ceil(h / (TILE + 0));
+    grid.style.setProperty('--cols', cols);
+    grid.style.setProperty('--rows', rows);
+    grid.innerHTML = '';
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++) {
+        const d = x + y;
+        const el = document.createElement('div');
+        el.className = 'diamond';
+        el.style.setProperty('--d', `calc(${d}*var(--delay-step))`);
+        grid.appendChild(el);
+      }
+    }
+  };
+  window.addEventListener('resize', build);
+  build();
+})();
+
+
+// green Pink Glow up
+
+document.addEventListener('DOMContentLoaded', () => {
+  const enBtn = document.getElementById('en-btn');
+  const jpBtn = document.getElementById('jp-btn');
+  const langSwitch = document.getElementById('lang-switch');
+
+  function switchLanguage(lang) {
+    document.querySelectorAll('main [data-en]').forEach(el => {
+      el.textContent = lang === 'jp' ? el.dataset.jp : el.dataset.en;
+    });
+  }
+
+  function applySavedLanguage() {
+    const lang = localStorage.getItem('site-lang') || 'en';
+    if(lang === 'en') {
+      enBtn.classList.add('active'); enBtn.classList.remove('jp-active');
+      jpBtn.classList.remove('active','jp-active');
+      langSwitch.classList.remove('jp-active');
+     document.documentElement.style.setProperty('--accent', 'greenyellow'); // EN
+     document.documentElement.style.setProperty('--nav-glow', 'rgb(221, 246, 184)'); // EN
+    } else {
+      jpBtn.classList.add('active','jp-active'); jpBtn.classList.remove('en-active');
+      enBtn.classList.remove('active','jp-active');
+      langSwitch.classList.add('jp-active');
+      document.documentElement.style.setProperty('--accent', '#ff69b4');
+      document.documentElement.style.setProperty('--nav-glow', 'pink');
+    }
+    switchLanguage(lang);
+  }
+
+
+// and for JP
+document.documentElement.style.setProperty('--accent', '#ff69b4');
+document.documentElement.style.setProperty('--nav-glow', '#ff69b4');
+
+
+  enBtn.addEventListener('click', () => { localStorage.setItem('site-lang','en'); applySavedLanguage(); });
+  jpBtn.addEventListener('click', () => { localStorage.setItem('site-lang','jp'); applySavedLanguage(); });
+
+  applySavedLanguage();
+});
+
+
+</script>
+
+</body>
+</html>

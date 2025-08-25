@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About Me</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+<link href="./style.css" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #1f242d;
+    --accent: greenyellow;
+    --nav-glow: greenyellow; /* navbar glow default */
+    --tile-base: #1b222b;
+    --tile-mid: #22313a;
+    --tile-border: #2a3942;
+    --gap: 10px;
+    --tile-anim: 2.8s;
+    --delay-step: 90ms;
+    --tile-radius: 10px;
+}
+
+
+
+/* Base */
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Poppins', sans-serif; color: #fff; background: var(--bg); line-height: 1.6; overflow-x: hidden; }
+
+/* NAV */
+nav {
+  background: var(--bg);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 25px 9%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  visibility: hidden;
+  opacity: 0;
+  animation: show-content 0.5s linear forwards;
+  animation-delay: 0.1s;
+}
+
+.navbar .logo { font-size: 30px; font-weight: 700; }
+.navbar ul { display: flex; margin:0; padding:0; }
+.navbar ul li { list-style: none; margin-left: 35px; }
+.navbar ul li a { color: white; font-size: 20px; font-weight: 500; text-decoration: none; transition: color 0.25s; }
+.navbar ul li:hover a, .navbar ul li.active a { color: var(--accent); }
+
+/* Language Switch */
+.lang-switch span { cursor: pointer; font-weight: 700; transition: color 0.25s, text-shadow 0.25s; }
+.lang-switch .active { color: var(--accent); text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent); }
+
+/* Add top padding for fixed navbar */
+main { padding-top: 120px; position: relative; z-index: 1; }
+
+/* Sections layering above background */
+section, footer { position: relative; z-index: 1; }
+
+/* HERO */
+.hero { text-align: center; padding: 6rem 1rem 4rem; }
+.hero h1 { font-size: 3rem; color: var(--accent); text-shadow: 0 0 10px var(--accent); margin:0 0 .5rem 0; }
+.hero p { font-size:1.3rem; max-width:760px; margin:0 auto; opacity:0.95; }
+
+/* ABOUT */
+.about { max-width:1100px; margin:0 auto; padding:4rem 2rem; display:flex; align-items:center; gap:2rem; flex-wrap:wrap; }
+.about img { flex:1 1 340px; max-width:100%; border-radius:20px; border:2px solid var(--accent); box-shadow:0 0 15px var(--accent); }
+.about-text { flex:1 1 340px; }
+.about-text h2 { color:var(--accent); font-size:2rem; margin:0 0 1rem 0; }
+.about-text p { font-size:1.15rem; }
+
+/* SKILLS */
+.skills { padding:4rem 2rem; background: rgba(255,255,255,0.05); border-top:2px solid rgba(173,255,47,0.25); border-bottom:2px solid rgba(173,255,47,0.25); }
+.skills h2 { text-align:center; color:var(--accent); margin:0 0 2rem 0; }
+.skill-list { display:flex; justify-content:center; flex-wrap:wrap; gap:1rem 1.25rem; max-width:1100px; margin:0 auto; }
+.skill { padding:0.85rem 1.25rem; border:2px solid var(--accent); border-radius:12px; box-shadow:0 0 10px var(--accent); background:transparent; font-weight:700; font-size:1rem; white-space:nowrap; }
+
+/* INTERESTS */
+.interests { max-width:1100px; margin:0 auto; padding:4rem 2rem; }
+.interests h2 { text-align:center; color:var(--accent); margin:0 0 2rem 0; }
+.interest-item { margin-bottom:1.25rem; border-left:4px solid var(--accent); padding-left:1rem; font-size:1.1rem; }
+
+/* QUOTE */
+.quote { padding:4rem 2rem; text-align:center; font-size:1.5rem; font-style:italic; background: rgba(0,0,0,0.5); border-top:2px solid var(--accent); border-bottom:2px solid var(--accent); box-shadow:0 0 10px var(--accent); }
+
+/* FOOTER */
+footer { text-align:center; padding:2rem; background:rgba(0,0,0,0.8); font-size:0.9rem; border-top:2px solid var(--accent); color:#bbb; }
+
+/* ANIMATED SQUARES BACKGROUND */
+.squares-bg { position: fixed; inset:0; z-index:0; pointer-events:none; display:grid; grid-template-columns:repeat(var(--cols,16),1fr); grid-template-rows:repeat(var(--rows,10),1fr); gap:var(--gap); padding:var(--gap); opacity:0.9; }
+.sq { border-radius:var(--tile-radius); background:var(--tile-base); border:1px solid var(--tile-border); box-shadow: inset 0 0 0 1px rgba(173,255,47,0.06); transform: scale(1); animation: wavePulse var(--tile-anim) ease-in-out infinite; animation-delay: var(--d,0ms); will-change: transform, box-shadow, background-color; }
+@keyframes wavePulse { 0%,100% { transform: scale(1); background:var(--tile-base); box-shadow:inset 0 0 0 1px rgba(173,255,47,0.06); } 50% { transform: scale(1.12); background:var(--tile-mid); box-shadow:0 0 12px rgba(204, 238, 154, 0.22), inset 0 0 0 1px rgba(173,255,47,0.25); } }
+
+@media(max-width:720px){ .hero h1{font-size:2.4rem;} .hero p,.about-text p{font-size:1.05rem;} }
+</style>
+</head>
+<body>
+
+<div id="bg-grid" class="squares-bg" aria-hidden="true"></div>
+
+<nav class="navbar glowing-border">
+    <a href="#" class="logo"></a>
+    <ul>
+        <li><a href="./index.html" data-en="Home" data-jp="ホーム">Home</a></li>
+        <li class="active"><a href="./about.html">About</a></li>
+        <li><a href="./projects.html" data-en="Projects">Projects</a></li>
+        <li><a href="#" data-en="Service" >Service</a></li>
+        <li><a href="./contact.html" target="_blank" data-en="Contact">Contact</a></li>
+    </ul>
+    <div class="lang-switch" id="lang-switch">
+        <span id="en-btn" class="active">EN</span> | 
+        <span id="jp-btn">JP</span>
+    </div>
+</nav>
+
+<main>
+  <section class="hero">
+    <h1 data-en="Maksat Gochyyev" data-jp="マクサット・ゴチエフ">Maksat Gochyyev</h1>
+    <p data-en="Engineer • Manager • Designer • AI Enthusiast — blending logic and creativity to build clean, bold, and modern experiences."
+       data-jp="エンジニア・マネージャー・デザイナー・AI愛好家 — 論理と創造性を融合して、洗練されたモダンな体験を構築します。">
+       Engineer • Manager • Designer • AI Enthusiast — blending logic and creativity to build clean, bold, and modern experiences.
+    </p>
+  </section>
+
+  <section class="about">
+    <img src="./images/yokohama.png"  style=" height: 700px;  " alt="Your photo">
+    <div class="about-text" style="margin-left: 40px;">
+      <h2 data-en="About Me" data-jp="私について">About Me</h2>
+      <p data-en="Hello! I’m Max, originally from Turkmenistan and currently in Japan. I enjoy shipping things that feel sharp, simple, and alive — from web interfaces to graphics. My background crosses business, design, and deep learning AI. I keep learning, experimenting, and polishing the craft every day."
+         data-jp="こんにちは！私はマックスです。元々トルクメニスタン出身で、現在は日本にいます。ウェブインターフェースからグラフィックまで、鋭く、シンプルで生き生きとしたものを作るのが好きです。私のバックグラウンドはビジネス、デザイン、深層学習AIに跨ります。毎日学び、実験し、技術を磨いています。">
+        Hello! I’m Max, originally from Turkmenistan and currently in Japan. I enjoy shipping things that feel sharp, simple, and alive — from web interfaces to graphics. My background crosses business, design, and deep learning AI. I keep learning, experimenting, and polishing the craft every day.
+      </p>
+      <p data-en="Values: clarity, speed, and a bit of playful glow ✨" data-jp="価値観：明快さ、スピード、そして少しの遊び心 ✨">
+        Values: clarity, speed, and a bit of playful glow ✨
+      </p>
+    </div>
+  </section>
+
+  <section class="skills">
+    <h2 data-en="Skills" data-jp="スキル">Skills</h2>
+    <div class="skill-list">
+      <div class="skill">HTML/CSS/JS</div>
+      <div class="skill">Python</div>
+      <div class="skill">Deep Learning</div>
+      <div class="skill">Graphic Design</div>
+      <div class="skill">SMM</div>
+      <div class="skill">Management</div>
+    </div>
+  </section>
+
+  <section class="interests">
+    <h2 data-en="Interests" data-jp="興味">Interests</h2>
+    <div class="interest-item" data-en="Japanese Culture — history, language, and the calm precision in everyday design." data-jp="日本文化 — 歴史、言語、日常のデザインの静かな精密さ。">
+      Japanese Culture — history, language, and the calm precision in everyday design.
+    </div>
+    <div class="interest-item" data-en="Travel — new places, new food, new people." data-jp="旅行 — 新しい場所、新しい食べ物、新しい人々。">
+      Travel — new places, new food, new people.
+    </div>
+    <div class="interest-item" data-en="Design — minimal layouts with just the right glow and motion." data-jp="デザイン — 適度な光と動きのあるミニマルレイアウト。">
+      Design — minimal layouts with just the right glow and motion.
+    </div>
+  </section>
+
+  <section class="quote" data-en="“At the edge of technology and design — that’s where the fun starts.”" data-jp="“テクノロジーとデザインの境界で — そこから楽しさが始まる。”">
+    “At the edge of technology and design — that’s where the fun starts.”
+  </section>
+</main>
+
+<footer>
+  &copy; 2025 Maksat Gochyyev. All rights reserved.
+</footer>
+
+<script>
+// Squares background
+(function() {
+  const grid = document.getElementById('bg-grid');
+  const TILE = 70;
+  const build = () => {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const cols = Math.ceil(w / (TILE + 10));
+    const rows = Math.ceil(h / (TILE + 10));
+    grid.style.setProperty('--cols', cols);
+    grid.style.setProperty('--rows', rows);
+    grid.innerHTML = '';
+    for(let y=0;y<rows;y++){
+      for(let x=0;x<cols;x++){
+        const d = x+y;
+        const el=document.createElement('div');
+        el.className='sq';
+        el.style.setProperty('--d',`calc(${d}*var(--delay-step))`);
+        grid.appendChild(el);
+      }
+    }
+  };
+  window.addEventListener('resize', build);
+  build();
+})();
+
+// Language switch
+document.addEventListener('DOMContentLoaded', () => {
+  const enBtn = document.getElementById('en-btn');
+  const jpBtn = document.getElementById('jp-btn');
+  const langSwitch = document.getElementById('lang-switch');
+
+  function switchLanguage(lang) {
+    document.querySelectorAll('main [data-en]').forEach(el => {
+      el.textContent = lang === 'jp' ? el.dataset.jp : el.dataset.en;
+    });
+  }
+
+  function applySavedLanguage() {
+    const lang = localStorage.getItem('site-lang') || 'en';
+    if(lang === 'en') {
+      enBtn.classList.add('active'); enBtn.classList.remove('jp-active');
+      jpBtn.classList.remove('active','jp-active');
+      langSwitch.classList.remove('jp-active');
+      document.documentElement.style.setProperty('--accent', 'greenyellow');
+      document.documentElement.style.setProperty('--nav-glow', 'greenyellow');
+    } else {
+      jpBtn.classList.add('active','jp-active'); jpBtn.classList.remove('en-active');
+      enBtn.classList.remove('active','jp-active');
+      langSwitch.classList.add('jp-active');
+      document.documentElement.style.setProperty('--accent', '#ff69b4');
+      document.documentElement.style.setProperty('--nav-glow', 'ff69b4');
+    }
+    switchLanguage(lang);
+  }
+
+  enBtn.addEventListener('click', () => { localStorage.setItem('site-lang','en'); applySavedLanguage(); });
+  jpBtn.addEventListener('click', () => { localStorage.setItem('site-lang','jp'); applySavedLanguage(); });
+
+  applySavedLanguage();
+});
+</script>
+
+</body>
+</html>
